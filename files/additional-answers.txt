@@ -1,0 +1,10 @@
+
+q_database_host=pe-puppet.localdomain
+q_public_hostname=pe-puppet.localdomain
+q_puppetagent_certname=pe-puppet.localdomain
+q_puppetdb_hostname=pe-puppet.localdomain
+q_puppet_enterpriseconsole_master_hostname=pe-puppet.localdomain
+q_puppet_enterpriseconsole_smtp_host=pe-puppet.localdomain
+q_puppetmaster_enterpriseconsole_hostname=pe-puppet.localdomain
+
+

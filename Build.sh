@@ -1,5 +1,8 @@
 #!/bin/sh
-image="jhazelwo/pe"
+image="jhazelwo/pupedock"
+keyname="pupkey"
+
+test -f ./.ssh/$keyname || ssh-keygen -t dsa -b 1024 -f ./.ssh/$keyname -P ''
 
 echo "`date` Building ${image}:"
 docker build --force-rm=true -t "${image}" . || exit $?
@@ -11,5 +14,6 @@ docker build --force-rm=true -t "${image}" . || exit $?
 	done
 }
 
-echo "`date` Done! Use ./Go.sh to start a container from this image."
+#echo "`date` Done! Use ./Go.sh to start a container from this image."
+echo "`date` Done."
 

@@ -1,2 +1,4 @@
-# pupedock
-Enterprise Puppet in a Docker container
+# pupedock "Puppy Dok"
+## Enterprise Puppet in a Docker container
+### CentOS:6
+
