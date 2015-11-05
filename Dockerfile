@@ -3,7 +3,7 @@ MAINTAINER "John Hazelwood" <jhazelwo@users.noreply.github.com>
 
 RUN yum clean expire-cache && \
  yum -y update && \
- yum -y install wget unzip cronie openssh-server openssh-clients
+ yum -y install wget unzip cronie openssh-server openssh-clients rsync
 
 # PE-Puppet deps:
 RUN yum -y install dmidecode hwdata make openssl pciutils-libs \
