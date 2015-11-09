@@ -3,7 +3,7 @@ image="jhazelwo/pupedock"
 keyname="pupkey"
 opts="-oStrictHostKeyChecking=false -oUserKnownHostsFile=/dev/null"
 
-container="`docker ps -a|grep ${image}|awk '{print $1}'`"
+container="`docker ps -a|grep ${image}|grep Up|awk '{print $1}'|head -1`"
 test -n "${container}" || exit 2
 
 addr="`docker inspect -f '{{.NetworkSettings.IPAddress}}' ${container}`"

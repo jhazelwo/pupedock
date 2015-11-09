@@ -3,7 +3,7 @@ MAINTAINER "John Hazelwood" <jhazelwo@users.noreply.github.com>
 
 RUN yum clean expire-cache && \
  yum -y update && \
- yum -y install wget unzip cronie openssh-server openssh-clients rsync
+ yum -y install wget unzip cronie openssh-server openssh-clients rsync yum-utils
 
 # PE-Puppet deps:
 RUN yum -y install dmidecode hwdata make openssl pciutils-libs \
@@ -22,6 +22,7 @@ RUN /tmp/update-hosts.sh && \
 ADD ./.ssh/pupkey.pub /root/.ssh/authorized_keys
 
 RUN rm -rf /var/run/puppetlabs
+RUN /usr/local/bin/puppet module install puppetlabs-stdlib
 
 ADD ./files/init.sh /root/
 CMD /root/init.sh
