@@ -24,6 +24,19 @@ ADD ./.ssh/pupkey.pub /root/.ssh/authorized_keys
 RUN rm -rf /var/run/puppetlabs
 RUN /usr/local/bin/puppet module install puppetlabs-stdlib
 
+# https://docs.puppetlabs.com/pe/latest/puppet_config.html#disabling-update-checking
+RUN touch /etc/puppetlabs/puppetserver/opt-out
+
+# https://docs.puppetlabs.com/puppetdb/latest/connect_puppet_master.html#step-2-edit-config-files
+RUN /usr/local/bin/puppet config set --section=main usecacheonfailure false
+RUN /usr/local/bin/puppet config set --section=main reports store,puppetdb
+# Don't put these 2 settings in [main]! It triggers 'trusted facts' bug.
+RUN /usr/local/bin/puppet config set --section=master storeconfigs true
+RUN /usr/local/bin/puppet config set --section=master storeconfigs_backend puppetdb
+
+# Trigger file used by init.sh.
+RUN date > /root/.new
+
 ADD ./files/init.sh /root/
 CMD /root/init.sh
 

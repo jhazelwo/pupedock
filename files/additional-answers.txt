@@ -6,5 +6,5 @@ q_puppetdb_hostname=pe-puppet.localdomain
 q_puppet_enterpriseconsole_master_hostname=pe-puppet.localdomain
 q_puppet_enterpriseconsole_smtp_host=pe-puppet.localdomain
 q_puppetmaster_enterpriseconsole_hostname=pe-puppet.localdomain
-
+q_pe_check_for_updates=n
 

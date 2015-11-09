@@ -1,43 +1,69 @@
 #!/bin/sh
 
+# /root/init.sh - Start container services
+# "John Hazelwood" <jhazelwo@users.noreply.github.com>
+
 # Let user CTRL-C container boot.
 trap "exit 2" 2
 
-yo() { # dawg
-    echo "`date` $@"
+# Services to start on boot
+services="sshd
+pe-activemq
+mcollective
+pe-postgresql
+pe-puppetdb
+pe-console-services
+pe-nginx
+pe-puppetserver"
+
+# Path to production modules
+prodmod="/etc/puppetlabs/code/environments/production/modules"
+
+
+# Bark function
+yo() { echo "`date` $@"; }
+
+Services() {
+    for this in $services; do
+        yo "${1} ${this}"
+        /sbin/service $this $1 >> /tmp/init.log
+    done
 }
 
-yo "init.sh; Booting PupEnt container, this will take a few minutes"
-yo "You will see a 'Puppet is up' message when done."
-service sshd start
-yo "You may log in with ./Login.sh while the Puppet services are started."
-service pe-activemq start
-service mcollective start
-service pe-postgresql start
-service pe-puppetdb start
-
-
-
-service pe-console-services start
-service pe-nginx start
-
-/sbin/service pe-puppetserver status
-/sbin/chkconfig pe-puppetserver
-/sbin/chkconfig --add pe-puppetserver
-/sbin/chkconfig pe-puppetserver on
-/sbin/service pe-puppetserver status
-/sbin/service pe-puppetserver start
-
-
-yo "Puppet is up."
-yo "You may stop this container with ctrl-c,"
-yo "with 'docker stop', or by killing the "
-yo "nginx, java and postmaster processes."
 #
-# Every n seconds check for Puppet services,
-#   if they've all stopped then stop the container.
+yo "Booting PupEnt container, this will take a few minutes"
+
+Services start
+#for this in $services; do
+#    yo "Starting ${this}"
+#    /sbin/service $this restart >> /tmp/init.log
+#done
+
+# If this is a brand new container don't daemonize,
+#   run the puppet agent to apply systemic changes
+#   then exit cleanly.
+test -f /root/.new && {
+    puppet agent -t
+    rm -vf /root/.new
+    Services stop
+#    for this in $services; do
+#        /sbin/service $this stop >> /tmp/init.log
+#    done
+    yo "Container creation complete!"
+    yo "Use 'docker start pupedock' to launch, then ./Login.sh to log in."
+    exit 0
+}
+yo "All Puppet services are up, container ready."
+
+# Wait forever for the shutdown trigger file.
+#   If found, exit cleanly.
 while [ 1 ]; do
-    sleep 10
-    pgrep 'nginx|java|postmaster' >/dev/null || exit 1
+    sleep 1
+    chown -R pe-puppet:pe-puppet $prodmod
+    test -f /root/.shutdown && {
+        yo "Shutdown trigger file found, stopping."
+        Services stop
+        exit 0
+    }
 done
 
