@@ -11,4 +11,5 @@ VM (2x2.60GHz, 3GB RAM) a brand new `./Build clean` takes me about `23m8.931s`
 ; and yes 98% of that time is waiting for Puppet.
 
 ### Usage:
+* Don't, you'll only make yourself miserable.
 
