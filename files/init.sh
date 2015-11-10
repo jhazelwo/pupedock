@@ -43,7 +43,7 @@ Services start
 #   run the puppet agent to apply systemic changes
 #   then exit cleanly.
 test -f /root/.new && {
-    puppet agent -t
+    puppet agent -t >> /tmp/init.log
     rm -vf /root/.new
     Services stop
 #    for this in $services; do
@@ -62,6 +62,7 @@ while [ 1 ]; do
     chown -R pe-puppet:pe-puppet $prodmod
     test -f /root/.shutdown && {
         yo "Shutdown trigger file found, stopping."
+        rm -fv /root/.shutdown
         Services stop
         exit 0
     }
