@@ -23,6 +23,7 @@ ADD ./.ssh/pupkey.pub /root/.ssh/authorized_keys
 
 RUN rm -rf /var/run/puppetlabs
 RUN /usr/local/bin/puppet module install puppetlabs-stdlib
+RUN /opt/puppetlabs/puppet/bin/gem install rspec
 
 # https://docs.puppetlabs.com/pe/latest/puppet_config.html#disabling-update-checking
 RUN touch /etc/puppetlabs/puppetserver/opt-out
