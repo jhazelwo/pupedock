@@ -8,7 +8,7 @@ RUN yum clean expire-cache && \
 # PE-Puppet deps:
 RUN yum -y install dmidecode hwdata make openssl pciutils-libs \
   centos-logos libjpeg-turbo libxslt mailcap net-tools pciutils \
-  initscripts kmod kmod-libs sysvinit-tools which tar
+  initscripts kmod kmod-libs sysvinit-tools which tar rubygems
 
 ADD ./files/puppet-enterprise-2015.2.2-el-6-x86_64.tar.gz /tmp/
 WORKDIR /tmp/puppet-enterprise-2015.2.2-el-6-x86_64
