@@ -8,7 +8,7 @@ RUN yum clean expire-cache && \
 # PE-Puppet deps:
 RUN yum -y install dmidecode hwdata make openssl pciutils-libs \
   centos-logos libjpeg-turbo libxslt mailcap net-tools pciutils \
-  initscripts kmod kmod-libs sysvinit-tools which tar rubygems
+  initscripts kmod kmod-libs sysvinit-tools which tar rubygems git
 
 ADD ./files/puppet-enterprise-2015.2.2-el-6-x86_64.tar.gz /tmp/
 WORKDIR /tmp/puppet-enterprise-2015.2.2-el-6-x86_64
@@ -23,7 +23,8 @@ ADD ./.ssh/pupkey.pub /root/.ssh/authorized_keys
 
 RUN rm -rf /var/run/puppetlabs
 RUN /usr/local/bin/puppet module install puppetlabs-stdlib
-RUN /opt/puppetlabs/puppet/bin/gem install rspec
+
+RUN /usr/bin/gem install puppet-lint rspec bundler rake
 
 # https://docs.puppetlabs.com/pe/latest/puppet_config.html#disabling-update-checking
 RUN touch /etc/puppetlabs/puppetserver/opt-out
