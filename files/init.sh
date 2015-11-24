@@ -33,7 +33,7 @@ Services() {
 }
 
 #
-yo "Booting PupEnt container, this will take a few minutes"
+yo "Booting PupEnt container, this usually takes a few minutes"
 Services start
 
 Agent() {
