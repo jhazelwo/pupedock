@@ -25,9 +25,7 @@ RUN rm -rf /var/run/puppetlabs
 RUN /usr/local/bin/puppet module install puppetlabs-stdlib
 
 # Needed for development and testing.
-RUN /usr/bin/gem install puppet-lint rspec bundler rake
-RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-RUN curl -sSL https://get.rvm.io | bash -s stable --ruby
+RUN /usr/bin/gem install puppet-lint
 
 # https://docs.puppetlabs.com/pe/latest/puppet_config.html#disabling-update-checking
 RUN touch /etc/puppetlabs/puppetserver/opt-out
