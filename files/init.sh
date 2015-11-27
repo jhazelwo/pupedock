@@ -7,8 +7,7 @@
 trap "exit 2" 2
 
 # Services to start on boot
-services="netfs
-sshd
+services="sshd
 pe-activemq
 mcollective
 pe-postgresql

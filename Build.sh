@@ -8,7 +8,7 @@ yo() { echo "`date` $@"; }
 
 test -f ./.ssh/$keyname || ssh-keygen -t dsa -b 1024 -f ./.ssh/$keyname -P ''
 
-echo "`date` Building ${image}:"
+echo "`date` Building IMAGE '${image}':"
 docker inspect $name >/dev/null 2>&1 && docker rm -f $name
 docker build --force-rm=true -t "${image}" . || exit $?
 
@@ -19,7 +19,7 @@ docker build --force-rm=true -t "${image}" . || exit $?
     done
 }
 
-yo "Doing initial run to create container from image:"
+yo "Doing initial run to create CONTAINER from IMAGE"
 docker run --name=$name --hostname=pe-puppet.localdomain $modules $image
 
 yo "Done!"
