@@ -38,7 +38,7 @@ RUN /usr/local/bin/puppet config set --section=master storeconfigs_backend puppe
 
 # Anything For Devels:
 RUN yum -y install rubygems git rsync wget unzip openssh-server openssh-clients
-RUN /usr/bin/gem install puppet-lint
+RUN /usr/bin/gem install --no-ri --no-rdoc puppet-lint
 RUN ln -sf /etc/puppetlabs/code/environments/production/manifests/site.pp /root/site.pp
 RUN ln -sf /etc/puppetlabs/code/environments/production/modules /root/modules
 ADD ./.ssh/pupkey.pub /root/.ssh/authorized_keys
