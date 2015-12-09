@@ -26,7 +26,7 @@ Services() {
         yo "${1} ${this}"
         /sbin/chkconfig --add $this
         /sbin/chkconfig $this on
-        /sbin/service $this $1 >> /tmp/init.log
+        /sbin/service $this $1 >> /root/init.log
     done
 }
 
@@ -36,7 +36,7 @@ Services start
 
 Agent() {
     echo -n "`date` Try (${1}/${2}): 'puppet agent -t',"
-    puppet agent --onetime --verbose --no-daemonize >> /tmp/init.log 2>&1
+    puppet agent --onetime --verbose --no-daemonize >> /root/init.log 2>&1
     ret="${?}"
     echo " returned: ${ret}."
     return $ret
@@ -46,10 +46,7 @@ Agent() {
 #   run the puppet agent to apply systemic changes
 #   then exit cleanly.
 test -f /root/.new && {
-    #
-    #
-    echo "TERM=xterm" >> /root/.bashrc
-    echo "export TERM" >> /root/.bashrc
+    echo "export TERM=xterm" >> /root/.bashrc
     #
     # Puppet may need a few seconds to finish booting
     #     so try three times to get a successful run.

@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 image="jhazelwo/pupedock"
 modules="-v /media/sf_GitHub:/mnt"
 name="pupedock"
@@ -6,7 +6,7 @@ name="pupedock"
 yo(){ echo "`date` $@";}
 
 echo "`date` Building IMAGE '${image}':"
-docker inspect $name >/dev/null 2>&1 && docker rm -f $name
+docker rm -f $name 2>/dev/null
 docker build --force-rm=true -t "${image}" . || exit $?
 
 [ "x$1" = "xclean" ] && {
