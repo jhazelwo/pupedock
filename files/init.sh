@@ -7,8 +7,7 @@
 trap "exit 2" 2
 
 # Services to start on boot
-services="sshd
-pe-activemq
+services="pe-activemq
 mcollective
 pe-postgresql
 pe-puppetdb
@@ -47,6 +46,11 @@ Agent() {
 #   run the puppet agent to apply systemic changes
 #   then exit cleanly.
 test -f /root/.new && {
+    #
+    #
+    echo "TERM=xterm" >> /root/.bashrc
+    echo "export TERM" >> /root/.bashrc
+    #
     # Puppet may need a few seconds to finish booting
     #     so try three times to get a successful run.
     Agent 1 3 || Agent 2 3 || Agent 3 3 || exit 1

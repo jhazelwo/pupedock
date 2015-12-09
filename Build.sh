@@ -1,12 +1,9 @@
 #!/bin/sh -e
 image="jhazelwo/pupedock"
-keyname="pupkey"
 modules="-v /media/sf_GitHub:/mnt"
 name="pupedock"
 
 yo(){ echo "`date` $@";}
-
-test -f ./.ssh/${keyname}.pub || ssh-keygen -b 2048 -t rsa -f ./.ssh/${keyname} -P ''
 
 echo "`date` Building IMAGE '${image}':"
 docker inspect $name >/dev/null 2>&1 && docker rm -f $name

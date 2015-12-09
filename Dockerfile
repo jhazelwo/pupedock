@@ -37,11 +37,10 @@ RUN /usr/local/bin/puppet config set --section=master storeconfigs true
 RUN /usr/local/bin/puppet config set --section=master storeconfigs_backend puppetdb
 
 # Anything For Devels:
-RUN yum -y install rubygems git rsync wget unzip openssh-server openssh-clients
+RUN yum -y install rubygems git rsync wget unzip
 RUN /usr/bin/gem install --no-ri --no-rdoc puppet-lint
 RUN ln -sf /etc/puppetlabs/code/environments/production/manifests/site.pp /root/site.pp
 RUN ln -sf /etc/puppetlabs/code/environments/production/modules /root/modules
-ADD ./.ssh/pupkey.pub /root/.ssh/authorized_keys
 
 # Trigger file used by init.sh.
 RUN date > /root/.new
