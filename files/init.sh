@@ -46,7 +46,6 @@ Agent() {
 #   run the puppet agent to apply systemic changes
 #   then exit cleanly.
 test -f /root/.new && {
-    echo "export TERM=xterm" >> /root/.bashrc
     #
     # Puppet may need a few seconds to finish booting
     #     so try three times to get a successful run.

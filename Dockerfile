@@ -4,15 +4,10 @@ MAINTAINER "John Hazelwood" <jhazelwo@users.noreply.github.com>
 # https://puppetlabs.com/download-puppet-enterprise-expand-all
 # curl -sSL "https://pm.puppetlabs.com/cgi-bin/download.cgi?dist=el&rel=6&arch=x86_64&ver=latest" -o ./files/puppet-enterprise-${THIS_RELEASE}.tar.gz
 # curl -sSL "https://pm.puppetlabs.com/cgi-bin/download.cgi?dist=el&rel=6&arch=x86_64&ver=latest" -o ./files/puppet-enterprise-2015.2.3-el-6-x86_64.tar.gz
-ENV THIS_RELEASE 2015.2.2-el-6-x86_64
+ENV THIS_RELEASE 2015.3.0-el-6-x86_64
 
 # Base patching:
-RUN yum clean expire-cache && yum -y update && yum -y install yum-utils
-
-# Puppet Enterprise dependencies:
-RUN yum -y install centos-logos cronie dmidecode hwdata initscripts kmod \
-  kmod-libs libjpeg-turbo libxslt mailcap make net-tools openssl pciutils \
-  pciutils-libs sysvinit-tools tar which
+RUN yum clean expire-cache && yum -y install yum-utils tar which
 
 # Copy, prepare and run Puppet installer:
 ADD ./files/puppet-enterprise-${THIS_RELEASE}.tar.gz /tmp/
@@ -39,8 +34,9 @@ RUN /usr/local/bin/puppet config set --section=master storeconfigs_backend puppe
 # Anything For Devels:
 RUN yum -y install rubygems git rsync wget unzip
 RUN /usr/bin/gem install --no-ri --no-rdoc puppet-lint
-RUN ln -sf /etc/puppetlabs/code/environments/production/manifests/site.pp /root/site.pp
-RUN ln -sf /etc/puppetlabs/code/environments/production/modules /root/modules
+RUN ln -s /etc/puppetlabs/code/environments/production/manifests/site.pp /root/
+RUN ln -s /etc/puppetlabs/code/environments/production/modules /root/
+RUN ln -s /var/log/puppetlabs/puppetserver/puppetserver.log /root/
 
 # Trigger file used by init.sh.
 RUN date > /root/.new

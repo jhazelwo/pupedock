@@ -17,7 +17,7 @@ docker build --force-rm=true -t "${image}" . || exit $?
 }
 
 yo "Doing initial run to create CONTAINER from IMAGE"
-docker run -P --expose=8140 --name=$name --hostname=pe-puppet.localdomain $modules $image
+docker run --name=$name --hostname=pe-puppet.localdomain $modules $image
 
 yo "Done!"
 
